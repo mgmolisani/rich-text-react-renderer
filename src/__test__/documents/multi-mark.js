@@ -1,17 +1,22 @@
-import { BLOCKS } from '@contentful/rich-text-types';
-export default function (entry) {
-    return {
-        nodeType: BLOCKS.DOCUMENT,
-        data: {},
-        content: [
-            {
-                nodeType: BLOCKS.EMBEDDED_ENTRY,
-                content: [],
-                data: {
-                    target: entry,
-                },
-            },
-        ],
-    };
-}
+export default {
+  nodeType: 'document',
+  data: {},
+  content: [
+    {
+      nodeType: 'paragraph',
+      data: {},
+      content: [
+        {
+          nodeType: 'text',
+          value: 'hello world',
+          marks: [
+            {type: 'bold'},
+            {type: 'italic'}
+          ],
+          data: {},
+        },
+      ],
+    },
+  ],
+};
 //# sourceMappingURL=embedded-entry.js.map

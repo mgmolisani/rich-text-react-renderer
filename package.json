@@ -58,5 +58,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "@contentful/rich-text-types": "^12.1.2"
+  }
 }

@@ -1,118 +1,197 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var React = require('react');
-var React__default = _interopDefault(React);
-var PropTypes = _interopDefault(require('prop-types'));
+var richTextTypes = require('@contentful/rich-text-types');
+var React = _interopDefault(require('react'));
 
-function styleInject(css, ref) {
-  if ( ref === void 0 ) ref = {};
-  var insertAt = ref.insertAt;
+var defineProperty = function (obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
 
-  if (!css || typeof document === 'undefined') { return; }
+  return obj;
+};
 
-  var head = document.head || document.getElementsByTagName('head')[0];
-  var style = document.createElement('style');
-  style.type = 'text/css';
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
 
-  if (insertAt === 'top') {
-    if (head.firstChild) {
-      head.insertBefore(style, head.firstChild);
-    } else {
-      head.appendChild(style);
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
     }
-  } else {
-    head.appendChild(style);
   }
 
-  if (style.styleSheet) {
-    style.styleSheet.cssText = css;
-  } else {
-    style.appendChild(document.createTextNode(css));
+  return target;
+};
+
+var _defaultNodeRenderers, _defaultMarkRenderers;
+
+var defaultNodeRenderers = (_defaultNodeRenderers = {}, defineProperty(_defaultNodeRenderers, richTextTypes.BLOCKS.PARAGRAPH, function (node, children, defaultKey) {
+  return React.createElement(
+    'p',
+    { key: defaultKey },
+    children
+  );
+}), defineProperty(_defaultNodeRenderers, richTextTypes.BLOCKS.HEADING_1, function (node, children, defaultKey) {
+  return React.createElement(
+    'h1',
+    { key: defaultKey },
+    children
+  );
+}), defineProperty(_defaultNodeRenderers, richTextTypes.BLOCKS.HEADING_2, function (node, children, defaultKey) {
+  return React.createElement(
+    'h2',
+    { key: defaultKey },
+    children
+  );
+}), defineProperty(_defaultNodeRenderers, richTextTypes.BLOCKS.HEADING_3, function (node, children, defaultKey) {
+  return React.createElement(
+    'h3',
+    { key: defaultKey },
+    children
+  );
+}), defineProperty(_defaultNodeRenderers, richTextTypes.BLOCKS.HEADING_4, function (node, children, defaultKey) {
+  return React.createElement(
+    'h4',
+    { key: defaultKey },
+    children
+  );
+}), defineProperty(_defaultNodeRenderers, richTextTypes.BLOCKS.HEADING_5, function (node, children, defaultKey) {
+  return React.createElement(
+    'h5',
+    { key: defaultKey },
+    children
+  );
+}), defineProperty(_defaultNodeRenderers, richTextTypes.BLOCKS.HEADING_6, function (node, children, defaultKey) {
+  return React.createElement(
+    'h6',
+    { key: defaultKey },
+    children
+  );
+}), defineProperty(_defaultNodeRenderers, richTextTypes.BLOCKS.EMBEDDED_ENTRY, function (node, children, defaultKey) {
+  return React.createElement(
+    'div',
+    { key: defaultKey },
+    children
+  );
+}), defineProperty(_defaultNodeRenderers, richTextTypes.BLOCKS.UL_LIST, function (node, children, defaultKey) {
+  return React.createElement(
+    'ul',
+    { key: defaultKey },
+    children
+  );
+}), defineProperty(_defaultNodeRenderers, richTextTypes.BLOCKS.OL_LIST, function (node, children, defaultKey) {
+  return React.createElement(
+    'ol',
+    { key: defaultKey },
+    children
+  );
+}), defineProperty(_defaultNodeRenderers, richTextTypes.BLOCKS.LIST_ITEM, function (node, children, defaultKey) {
+  return React.createElement(
+    'li',
+    { key: defaultKey },
+    children
+  );
+}), defineProperty(_defaultNodeRenderers, richTextTypes.BLOCKS.QUOTE, function (node, children, defaultKey) {
+  return React.createElement(
+    'blockquote',
+    { key: defaultKey },
+    children
+  );
+}), defineProperty(_defaultNodeRenderers, richTextTypes.BLOCKS.HR, function (node, children, defaultKey) {
+  return React.createElement('hr', { key: defaultKey });
+}), defineProperty(_defaultNodeRenderers, richTextTypes.INLINES.ASSET_HYPERLINK, function (node, children, defaultKey) {
+  return defaultInline(node, children, defaultKey);
+}), defineProperty(_defaultNodeRenderers, richTextTypes.INLINES.ENTRY_HYPERLINK, function (node, children, defaultKey) {
+  return defaultInline(node, children, defaultKey);
+}), defineProperty(_defaultNodeRenderers, richTextTypes.INLINES.EMBEDDED_ENTRY, function (node, children, defaultKey) {
+  return defaultInline(node, children, defaultKey);
+}), defineProperty(_defaultNodeRenderers, richTextTypes.INLINES.HYPERLINK, function (node, children, defaultKey) {
+  return React.createElement(
+    'a',
+    { href: node.data.uri, key: defaultKey },
+    children
+  );
+}), _defaultNodeRenderers);
+
+var defaultMarkRenderers = (_defaultMarkRenderers = {}, defineProperty(_defaultMarkRenderers, richTextTypes.MARKS.BOLD, function (text) {
+  return React.createElement(
+    'b',
+    null,
+    text
+  );
+}), defineProperty(_defaultMarkRenderers, richTextTypes.MARKS.ITALIC, function (text) {
+  return React.createElement(
+    'i',
+    null,
+    text
+  );
+}), defineProperty(_defaultMarkRenderers, richTextTypes.MARKS.UNDERLINE, function (text) {
+  return React.createElement(
+    'u',
+    null,
+    text
+  );
+}), defineProperty(_defaultMarkRenderers, richTextTypes.MARKS.CODE, function (text) {
+  return React.createElement(
+    'code',
+    null,
+    text
+  );
+}), _defaultMarkRenderers);
+
+var defaultInline = function defaultInline(node, children, defaultKey) {
+  return React.createElement(
+    'span',
+    { key: node.data.target.sys.id },
+    'type: ',
+    node.nodeType,
+    ' id: ',
+    node.data.target.sys.id
+  );
+};
+
+/**
+ * Serialize a Contentful Rich Text `document` to React tree
+ */
+function documentToReactTree(richTextDocument) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var renderNode = _extends({}, defaultNodeRenderers, options.renderNode);
+  var renderMark = _extends({}, defaultMarkRenderers, options.renderMark);
+
+  function convert(nodes) {
+    return nodes.map(function (node, index) {
+      if (richTextTypes.helpers.isText(node)) {
+        return node.marks.reduce(function (value, mark) {
+          if (!renderMark[mark.type]) {
+            return value;
+          }
+          return renderMark[mark.type](value);
+        }, node.value);
+      } else {
+        if (!node.nodeType || !renderNode[node.nodeType]) {
+          return null;
+        }
+        return renderNode[node.nodeType](node, convert(node.content), index);
+      }
+    });
   }
+
+  return convert(richTextDocument.content);
 }
 
-var css = "/* add css styles here (optional) */\n\n.styles_test__3OKZ1 {\n  display: inline-block;\n  margin: 2em auto;\n  border: 2px solid #000;\n  font-size: 2em;\n}\n";
-var styles = { "test": "styles_test__3OKZ1" };
-styleInject(css);
-
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-var inherits = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-};
-
-var possibleConstructorReturn = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return call && (typeof call === "object" || typeof call === "function") ? call : self;
-};
-
-var ExampleComponent = function (_Component) {
-  inherits(ExampleComponent, _Component);
-
-  function ExampleComponent() {
-    classCallCheck(this, ExampleComponent);
-    return possibleConstructorReturn(this, (ExampleComponent.__proto__ || Object.getPrototypeOf(ExampleComponent)).apply(this, arguments));
-  }
-
-  createClass(ExampleComponent, [{
-    key: 'render',
-    value: function render() {
-      var text = this.props.text;
-
-
-      return React__default.createElement(
-        'div',
-        { className: styles.test },
-        'Example Component: ',
-        text
-      );
-    }
-  }]);
-  return ExampleComponent;
-}(React.Component);
-
-ExampleComponent.propTypes = {
-  text: PropTypes.string
-};
-
-module.exports = ExampleComponent;
+exports.documentToReactTree = documentToReactTree;
 //# sourceMappingURL=index.js.map

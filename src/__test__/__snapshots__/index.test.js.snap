@@ -147,9 +147,21 @@ Array [
 exports[`documentToReactTree renders marks with the passed custom mark rendered 1`] = `
 Array [
   <p>
-    <u>
+    <Strong>
         hello world
-    </u>
+    </Strong>
+</p>,
+]
+`;
+
+exports[`documentToReactTree renders multiple marks with default mark renderer 1`] = `
+Array [
+  <p>
+    <i>
+        <b>
+            hello world
+        </b>
+    </i>
 </p>,
 ]
 `;
@@ -180,9 +192,9 @@ Array [
 
 exports[`documentToReactTree renders nodes with passed custom node renderer 1`] = `
 Array [
-  <p>
+  <Paragraph>
     hello world
-</p>,
+</Paragraph>,
 ]
 `;
 

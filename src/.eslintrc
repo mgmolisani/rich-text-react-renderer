@@ -1,5 +1,9 @@
 {
   "env": {
     "jest": true
+  },
+  "rules": {
+    "semi": "off",
+    "comma-dangle": "off"
   }
 }
